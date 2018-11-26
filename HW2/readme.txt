@@ -1,4 +1,4 @@
-First you need nodejs and 
+First you need nodejs and Ganache blockchain
 
 Solc is a compiler for solidity 
 installation : npm install -g solc
