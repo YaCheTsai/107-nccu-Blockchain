@@ -72,12 +72,11 @@ contract Bank {
 
         // 增加 msg.sender 的 coinBalance
         // your code
-        
         coinBalance[msg.sender] += value;
 
+        emit MintEvent(msg.sender, coinValue, now);
         // emit MintEvent
         // your code
-        emit MintEvent(msg.sender, coinValue, now);
 
     }
 
@@ -87,17 +86,14 @@ contract Bank {
 
         // require owner 的 coinBalance 不小於 value
         // your code
-        require(coinBalance[owner] >= value, "your coinBalance are not enough");
-
+        require(coinBalance[owner] >= value, "owner's coin balances are not enough");
         // require msg.sender 的 etherBalance 不小於 value
         // your code
         require(balance[msg.sender] >= value, "your balances are not enough");
-        
 
         // msg.sender 的 etherBalance 減少 value
         // your code
         balance[msg.sender] -= value;
-        
         // owner 的 etherBalance 增加 value
         // your code
         balance[owner] += value;
@@ -105,11 +101,9 @@ contract Bank {
         // msg.sender 的 coinBalance 增加 value
         // your code
         coinBalance[msg.sender] += value;
-        
         // owner 的 coinBalance 減少 value
         // your code
         coinBalance[owner] -= value;
-        
 
         // emit BuyCoinEvent
         // your code
@@ -123,22 +117,16 @@ contract Bank {
 
         // require msg.sender 的 coinBalance 不小於 value
         // your code
-        require(coinBalance[msg.sender] >= value, "your coinBalance are not enough");
-        
+        require(coinBalance[msg.sender] >= value, "owner's coin balances are not enough");
         // msg.sender 的 coinBalance 減少 value
         // your code
         coinBalance[msg.sender] -= value;
-        
-        
         // to 的 coinBalance 增加 value
         // your code
         coinBalance[to] += value;
-
         // emit TransferCoinEvent
         // your code
         emit TransferCoinEvent(msg.sender, to, coinValue, now);
-        
-
     }
 
 	// 檢查銀行帳戶餘額
@@ -158,19 +146,18 @@ contract Bank {
 
     // 轉移owner
     function transferOwner(address newOwner) public isOwner {
-        address oldOwner = owner;
+
         // transfer ownership
         // your code
+        address oldOwner = owner;
         owner = newOwner;
-        
+
         // emit TransferOwnerEvent
         // your code
-        emit TransferOwnerEvent(oldOwner, newOwner, now);
-        
+        emit TransferOwnerEvent(oldOwner, owner, now);
     }
 
     function kill() public isOwner {
         selfdestruct(msg.sender);
-
     }
 }
